@@ -1,0 +1,1830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Frequency to wavelength converter - Wavelength to frequency converter - Energy calculator</title>
+  
+  <meta name="AUTHOR" content="FRANCESCO ERRANTE, http://www.radiondistics.com">
+  <meta name="AUDIENCE" content="All">
+  <meta name="ROBOTS" content="INDEX,FOLLOW">
+  <meta name="REVISIT-AFTER" content="30 days">
+  <meta name="keywords" content="radiondistics,radio,waves,radiowaves,radiophysics, physics,HF,hf,antenna,antennas,shortwave,short,equipment,
+military,dX-ing,tactical,special,aerial,aerials,electronics,radioelectronics,telecommunications,
+radiocommunications,design,manufacturing,engineering,systems,arrays,beams,balun,towers,linear,amplifiers,kw,
+solidstate,valves,radio,radiostations,stations,db,radiation,radiations,hertzian,hertz,marconi,
+propagation,ray,rays,gain,superhighgain,lowloss,low,loss, losses,lossless,array,cortine,cortina,
+weather,proof,precision,marconi&#39;s antenna,antenna marconi,hertz&#39;s dipole,dipolo hertziano,wavelength,
+photon,photoelectric effect,errante antenna,errante theorema">
+<link href="./files/master.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+ body {
+  background-color: #000000;
+ }
+ p.c8 {font-size: 51%}
+ hr.c7 {text-align: center}
+ p.c6 {text-align: center}
+ span.c5 {font-size: 51%}
+ p.c4 {color: #B00000; text-align: justify}
+ span.c3 {font-size: 70%}
+ p.c2 {color: #1C60AB; font-size: 144%}
+ p.c1 {text-align: justify}
+ .wide { word-spacing: 15px; font-weight: bold; }
+ .narrow { word-spacing: -3px; font-weight: bold; }
+ .doublespaced { line-height: 1.5; }
+</style>
+<script type="text/javascript">
+function downloadJSAtOnload() {
+var element = document.createElement("script");
+element.src = "defer.js";
+document.body.appendChild(element);
+}
+if (window.addEventListener)
+window.addEventListener("load", downloadJSAtOnload, false);
+else if (window.attachEvent)
+window.attachEvent("onload", downloadJSAtOnload);
+else window.onload = downloadJSAtOnload;
+</script>
+
+
+<script type="text/javascript">
+
+    function divide() {
+		var myBox1 = document.getElementById('eV').value;
+		var myBox2 = document.getElementById('k').value;
+		var result = document.getElementById('result');
+		var myResult = myBox1 / myBox2;
+		result.value = myResult;
+
+}
+</script>
+
+<script type="text/javascript">
+
+    function multiply() {
+		var myBox3 = document.getElementById('v').value;
+		var myBox4 = document.getElementById('h').value;
+		var result = document.getElementById('result2');
+		var myResult2 = myBox3 * myBox4;
+		result.value = myResult2;
+
+}
+</script>
+
+
+
+</head><body><form name="SimpleCalc">
+ <script language="javascript">
+  function Calculate_wavelength(){
+   with(document.SimpleCalc){
+
+    if(frequency.value == 0){
+     wavelength.value='0';
+     energy.value='0';
+     Calculate_type(wavelength.value);
+     return;
+    }
+
+    r1=8;//number of decimal places to round to
+    r2=3;
+
+    pi=3.141592653898;
+    c= 3*Math.pow(10,8);
+
+    f = parseFloat(frequency.value)*Math.pow(10,9);
+    L = (c/f)*Math.pow(10,6);
+    wavelength.value = Math.round(L*Math.pow(10,r1))/Math.pow(10,r1);
+    energy.value = 1.24/wavelength.value;
+
+    Calculate_type(wavelength.value);
+
+    return;
+   }
+  }
+
+  function Calculate_frequency(){
+   with(document.SimpleCalc){
+
+    if(wavelength.value == 0){
+     frequency.value='0';
+     energy.value='0';
+     Calculate_type(wavelength.value);
+     return;
+    }
+
+
+    r1=8;//number of decimal places to round to
+    r2=3;
+
+    pi=3.141592653898;
+    c= 3*Math.pow(10,8);
+
+    L = parseFloat(wavelength.value)*Math.pow(10,-6);	//puts into um
+    f = (c/L)*Math.pow(10,-9);		//now in GHz
+    frequency.value = Math.round(f*Math.pow(10,r1))/Math.pow(10,r1);
+    energy.value = 1.24/wavelength.value;
+
+    Calculate_type(wavelength.value);
+
+    return;
+   }
+  }
+
+function Calculate_energy(){
+   with(document.SimpleCalc){
+
+    if(energy.value == 0){
+        frequency.value='0';
+        wavelength.value='0';
+        Calculate_type(wavelength.value);
+	return;
+      }
+
+    r1=8;//number of decimal places to round to
+    r2=3;
+
+    wavelength.value = 1.24/energy.value;
+
+    pi=3.141592653898;
+    c= 3*Math.pow(10,8);
+
+    L = parseFloat(wavelength.value)*Math.pow(10,-6);	//puts into um
+    f = (c/L)*Math.pow(10,-9);		//now in GHz
+    frequency.value = Math.round(f*Math.pow(10,r1))/Math.pow(10,r1)
+
+    Calculate_type(wavelength.value);
+
+    return;
+   }
+  }
+
+function Calculate_type(wave){
+   with(document.SimpleCalc){
+
+
+    //less than 0 case
+    if (wave < 0) {
+        document.getElementById('light_type').innerHTML = 'not&nbsp;real';
+        }
+
+    //special case for no entry
+    else if (wave == 0) {
+	document.getElementById('light_type').innerHTML = '';
+	}
+
+    //determines if the wavelength value is in the gamma ray range
+    else if (wave > 0 && (wave* Math.pow(10,-6)) <= (10*Math.pow(10,-12))){
+	document.getElementById('light_type').innerHTML = 'gamma&nbsp;ray';
+	}
+
+    //determines if the wavelength value is in the x-ray range
+    else if ((wave* Math.pow(10,-6)) > (10*Math.pow(10,-12)) && (wave* Math.pow(10,-6)) <= (10*Math.pow(10,-9))){
+	document.getElementById('light_type').innerHTML = 'x-ray';
+	}
+
+    //determines if the wavelength value is in the ultraviolet range
+    else if ((wave* Math.pow(10,-6)) > (10*Math.pow(10,-9)) && (wave* Math.pow(10,-6)) <= (400*Math.pow(10,-9))){
+	document.getElementById('light_type').innerHTML = 'ultraviolet';
+	}
+
+    //determines if the wavelength value is in the visible range
+    else if ((wave* Math.pow(10,-6)) > (400*Math.pow(10,-9)) && (wave* Math.pow(10,-6)) <= (700*Math.pow(10,-9))){
+	document.getElementById('light_type').innerHTML = 'visible';
+	}
+
+    //determines if the wavelength value is in the infrared range
+    else if ((wave* Math.pow(10,-6)) > (.7*Math.pow(10,-6)) && (wave* Math.pow(10,-6)) <= (300*Math.pow(10,-6))){
+	document.getElementById('light_type').innerHTML = 'infrared';
+	}
+
+    //determines if the wavelength value is in the microwave range
+    else if ((wave* Math.pow(10,-6)) > (300*Math.pow(10,-6)) && (wave* Math.pow(10,-6)) <= 1){
+	document.getElementById('light_type').innerHTML = 'microwave';
+	}
+
+    else {
+	document.getElementById('light_type').innerHTML = 'radio&nbsp;wave';
+	}
+    }
+   }
+
+
+
+</script>
+
+
+<script language="JavaScript">
+
+<!--
+
+
+
+// CED subroutine for cleaning up JavaScript rounding errors
+
+
+
+
+
+function perRound(num, precision) {
+
+	var precision = 3; //default value if not passed from caller, change if desired
+
+	// remark if passed from caller
+
+	precision = parseInt(precision); // make certain the decimal precision is an integer
+
+    var result1 = num * Math.pow(10, precision);
+
+
+
+}
+
+
+
+function zerosPad(rndVal, decPlaces) {
+
+    var valStrg = rndVal.toString(); // Convert the number to a string
+
+    var decLoc = valStrg.indexOf("."); // Locate the decimal point
+
+    // check for a decimal
+
+    if (decLoc == -1) {
+
+        decPartLen = 0; // If no decimal, then all decimal places will be padded with 0s
+
+        // If decPlaces is greater than zero, add a decimal point
+
+        valStrg += decPlaces > 0 ? "." : "";
+
+    }
+
+    else {
+
+        decPartLen = valStrg.length - decLoc - 1; // If there is a decimal already, only the needed decimal places will be padded with 0s
+
+    }
+
+     var totalPad = decPlaces - decPartLen;    // Calculate the number of decimal places that need to be padded with 0s
+
+    if (totalPad > 0) {
+
+        // Pad the string with 0s
+
+        for (var cntrVal = 1; cntrVal <= totalPad; cntrVal++)
+
+            valStrg += "0";
+
+        }
+
+    return valStrg;
+
+}
+
+// send the value in as "num" in a variable
+
+
+
+// clears field of default value
+
+function clear_field(field) {
+
+		if (field.value==field.defaultValue) {
+
+			field.value=''
+
+		}
+
+	}
+
+
+
+function dbw2watts(inValue)
+
+{
+
+  return Math.round(Math.pow(10,eval(inValue)/10)*100000)/100000;
+
+}
+
+
+
+function watts2dbw(inValue)
+
+{
+
+  return Math.round(10 * Math.log(eval(inValue))/Math.LN10 *
+
+100000)/100000;
+
+}
+
+
+
+function txant(form)
+
+{
+
+  EmptyString = ""
+
+  form.erpdbw.value = EmptyString;
+
+  form.eirpdbw.value = EmptyString;
+
+  form.eirpwatts.value = EmptyString;
+
+  form.erpwatts.value = EmptyString;
+
+  dipolegain = 10 * Math.log(1)/Math.LN10;
+
+  form.tpo.value = eval(form.tpo.value);
+
+
+// 1/2 wave dipole gain = 1.64dB
+
+
+
+  if (form.tpounit.selectedIndex)
+
+  {
+
+if (form.antgainunit.selectedIndex)
+
+{
+
+
+
+  form.erpdbw.value = parseFloat(form.tpo.value) + parseFloat(form.antgain.value);
+
+  form.eirpdbw.value = parseFloat(form.erpdbw.value) + parseFloat(dipolegain);
+
+  form.erpdbwr.value = perRound(parseFloat(form.tpo.value) + parseFloat(form.antgain.value));
+
+  form.eirpdbwr.value = perRound(parseFloat(form.erpdbw.value) + parseFloat(dipolegain));
+
+}
+
+else
+
+{
+
+
+
+  form.eirpdbw.value = parseFloat(form.tpo.value) + parseFloat(form.antgain.value);
+
+  form.erpdbw.value = parseFloat(form.eirpdbw.value) - parseFloat(dipolegain);
+
+  form.eirpdbwr.value = perRound(parseFloat(form.tpo.value) + parseFloat(form.antgain.value));
+
+  form.erpdbwr.value = perRound(parseFloat(form.eirpdbw.value) - parseFloat(dipolegain));
+
+}
+
+  }
+
+  else
+
+  {
+
+if (form.antgainunit.selectedIndex)
+
+{
+
+
+
+  form.erpdbw.value = parseFloat(watts2dbw(form.tpo.value)) + parseFloat(form.antgain.value);
+
+  form.eirpdbw.value = parseFloat(form.erpdbw.value) + parseFloat(dipolegain);
+
+  form.erpdbwr.value = perRound(parseFloat(watts2dbw(form.tpo.value)) + parseFloat(form.antgain.value));
+
+  form.eirpdbwr.value = perRound(parseFloat(form.erpdbw.value) + parseFloat(dipolegain));
+
+}
+
+else
+
+{
+
+
+
+  form.eirpdbw.value = parseFloat(watts2dbw(form.tpo.value)) + parseFloat(form.antgain.value);
+
+  form.erpdbw.value = parseFloat(form.eirpdbw.value) - parseFloat(dipolegain);
+
+  form.eirpdbwr.value = perRound(parseFloat(watts2dbw(form.tpo.value)) + parseFloat(form.antgain.value));
+
+  form.erpdbwr.value = perRound(parseFloat(form.eirpdbw.value) - parseFloat(dipolegain));
+
+}
+
+  }
+
+  form.eirpwatts.value = dbw2watts(form.eirpdbw.value);
+
+  form.erpwatts.value = dbw2watts(form.erpdbw.value);
+
+  form.eirpwattsr.value = perRound(dbw2watts(form.eirpdbw.value));
+
+  form.erpwattsr.value = perRound(dbw2watts(form.erpdbw.value));
+
+}
+
+//-->
+
+</script>
+
+
+<script language="JavaScript">
+<!--
+var fx=0;
+var dx=0;
+var g1=0;
+var g2=0;
+var att=0;
+var lx=0;
+var distcorr=0;
+
+function setunits(form, sunit)
+  {
+   if (sunit == 'm')
+     {
+      form.funit.value='MHz';
+      form.dunit.value='m';
+      form.g1unit.value='dBi';
+      form.g2unit.value='dBi';
+      form.aunit.value='dB';
+      distcorr = 1;
+     }
+
+   if (sunit == 'km')
+     {
+      form.funit.value='MHz';
+      form.dunit.value='km';
+      form.g1unit.value='dBi';
+      form.g2unit.value='dBi';
+      form.aunit.value='dB';
+      distcorr = 1000;
+     }
+
+   if (sunit == 'mkm')
+     {
+      form.funit.value='MHz';
+      form.dunit.value='Mkm';
+      form.g1unit.value='dBi';
+      form.g2unit.value='dBi';
+      form.aunit.value='dB';
+      distcorr = 1e9;
+     }
+
+
+   if (sunit == 'lj')
+     {
+      form.funit.value='MHz';
+      form.dunit.value='lyear';
+      form.g1unit.value='dBi';
+      form.g2unit.value='dBi';
+      form.aunit.value='dB';
+      distcorr = 9.46e15;
+     }
+   }
+
+
+function calcloss(form)
+  {
+   if (distcorr == 0)
+     {
+      alert('Set distance unit first!');
+      return;
+     }
+
+   fx = parseFloat(form.freq.value);
+   dx = parseFloat(form.dist.value);
+   g1 = parseFloat(form.gain1.value);
+   g2 = parseFloat(form.gain2.value);
+
+   dx = dx * distcorr;
+   g1 = g1 / 10;
+   g1 = Math.pow(10,g1);
+   g2 = g2 / 10;
+   g2 = Math.pow(10,g2);
+
+   lx = 300 / fx;
+   att = g1 * g2 * lx * lx / (16 * Math.PI * Math.PI * dx * dx)
+   att = 10 * Math.log(att) / Math.log(10);
+
+   att = Math.round(att * 10) / 10;
+
+   form.att.value=parseFloat(att);
+  }
+
+function calcdist(form)
+  {
+   if (distcorr == 0)
+     {
+      alert('Set distance unit first!');
+      return;
+     }
+
+   fx = parseFloat(form.freq.value);
+   att = parseFloat(form.att.value);
+   g1 = parseFloat(form.gain1.value);
+   g2 = parseFloat(form.gain2.value);
+
+   g1 = g1 / 10;
+   g1 = Math.pow(10,g1);
+   g2 = g2 / 10;
+   g2 = Math.pow(10,g2);
+   att = att / 10;
+   att = Math.pow(10,att);
+
+   lx = 300 / fx;
+
+   dx = lx * Math.sqrt(g1 * g2 / att) / (4 * Math.PI);
+   dx = dx / distcorr;
+
+   dx = Math.round(dx * 1000) / 1000;
+
+   if (dx >= 10)
+     dx = Math.round(dx * 100) / 100;
+
+   if (dx >= 100)
+     dx = Math.round(dx * 10) / 10;
+
+   if (dx >= 1000)
+     dx = Math.round(dx);
+
+   form.dist.value=parseFloat(dx);
+  }
+
+// -->
+</script>
+
+
+
+
+
+
+
+
+  <table width="900" align="center" cellspacing="0" cellpadding="0" border="0">
+    <tbody><tr>
+      <!-- row 1 -->
+
+      <td width="167" height="24" valign="top" align="center"><img height="24" src="./files/top_left.jpg" width="167" border="0"></td>
+
+      <td width="733" height="24" valign="top" align="right" background="./files/top_middle.jpg">
+      <img src="./files/top_right.jpg" height="24" border="0"></td>
+    </tr>
+
+    <tr>
+      <!-- row 2 -->
+
+      <td width="167" height="65" valign="top" align="center"><img height="65" src="./files/gradient.jpg" width="167" border="0"></td>
+
+      <td width="733" height="65" align="left" valign="top" background="./files/header_bg.jpg">
+      <img width="613" height="48" src="./files/radiondistics.jpg" vspace="0" hspace="0" alt="www.RADIONDISTICS.com" border="0"></td>
+    </tr>
+
+    <tr>
+      <!-- row 3 -->
+
+      <td width="167" valign="top" align="left" background="./files/expand.gif">
+        <img src="./files/new_back.jpg" border="0" height="306" width="167">
+
+        <p> </p>
+
+        <table width="140" height="50" border="0">
+          <tbody><tr>
+            <td width="140" height="50" valign="top"> </td>
+          </tr>
+        </tbody></table>
+
+        <table width="140" height="140" border="0">
+          <tbody><tr>
+            <td width="140" height="140" valign="top" align="center"><img src="./files/nuclear_no_thanks.jpg" width="140" height="140" alt="Nuclear? No, thanks! - Nucleare? No, grazie!"></td>
+          </tr>
+        </tbody></table>
+
+        <table width="140" height="50" border="0">
+          <tbody><tr>
+            <td width="140" height="50" valign="top"> </td>
+          </tr>
+        </tbody></table>
+
+           <table width="140" height="380" border="0">
+
+        <tbody><tr>
+            <td width="140" valign="top" align="left" bgcolor="#A5A243">
+               <p align="left"><font color="#FFFF00"><big><strong>Planning a trip to Sicily?  Then,
+              make sure you won't be feeding the Mafia!</strong></big></font></p>
+
+          <a href="http://www.addiopizzotravel.it/default.asp?hl=en" target="_blank"><img src="./files/addiopizzo.jpg" width="140" height="246" valign="top" align="center" alt="Pizzo-free travel - brought to you by the ADDIO PIZZO&#39;s guys" border="0"></a></td>
+          </tr>
+        </tbody></table>
+
+<table width="140" height="50" border="0">
+          <tbody><tr>
+            <td>&nbsp;</td>
+          </tr>
+        </tbody></table>
+
+<table width="140" height="31" border="0">
+          <tbody><tr>
+            <td width="140" height="31" valign="top" align="left"><p>
+<a href="http://www.unitconversion.org/" target="_blank"><img alt="Unit Converter" border="0" src="./files/unitconversion_org.gif" width="88" height="31"></a></p>
+
+
+</td>
+          </tr>
+        </tbody></table>
+
+      </td>
+
+      <td width="733" align="left" valign="top" bgcolor="#FFFFFF">
+        <!-- START OF MENU -->
+
+        <table height="50" cellspacing="0" cellpadding="5" width="100%" border="0">
+          <tbody><tr>
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"><a href="https://barionleg.github.io/eocaltavista/index.html">Home</a></td>
+
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"> </td>
+
+
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"><a href="https://barionleg.github.io/eocaltavista/app.html">C_Temp</a></td>
+
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"> </td>
+
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"><a href="https://barionleg.github.io/2D-Barcode/indexII.html">2d_bARcode</a></td>
+
+            <td height="30" align="center" valign="top" bgcolor="#FFFFFF"> </td>
+          </tr>
+
+
+       </tbody></table>
+<!-- end of menu -->
+
+
+
+        <table width="100%" height="80" cellspacing="0" cellpadding="0" align="center" border="0">
+          <tbody><tr>
+
+              <td colspan="10" align="center" width="100%" height="80" valign="top">
+
+<script language="JavaScript1.2">
+
+var sliderwidth=733;
+
+var sliderheight=80;
+
+var slidespeed=2;
+
+slidebgcolor="#FFFFFF";
+
+var leftrightslide=new Array()
+var finalslide=''
+leftrightslide[1]='<a href="https://barionleg.github.io/signalanalysis/" target="_self"><img src="./img/01.jpg" border=0 alt="signalanalysis" width=107 height=80></a>'
+leftrightslide[2]='<a href="https://barionleg.github.io/GalaxyViewer/" target="_self"><img src="./img/02.jpg" border=0 alt="GalaxyViewer" width=107 height=80></a>'
+leftrightslide[3]='<a href="https://barionleg.github.io/sunburst-chart/example/large-data/index.html" target="_self"><img src="./img/03.jpg" border=0 alt="sunburst-chart" width=107 height=80></a>'
+leftrightslide[4]='<a href="https://barionleg.github.io/2D-Barcode/indexII.html" target="_self"><img src="./img/04.jpg" border=0 alt="2D-Barcode" width=107 height=80></a>'
+leftrightslide[5]='<a href="https://aibolem.github.io/piano/" target="_self"><img src="./img/05.jpg" border=0 alt="PIANO" width=107 height=80></a>'
+leftrightslide[6]='<a href="https://soundcloud.com/bardavelidze-irakli/gt-1783-2033" target="_self"><img src="./img/06.jpg" border=0 alt="Treaty of Georgievsk" width=107 height=80></a>'
+var copyspeed=slidespeed
+leftrightslide='<nobr>'+leftrightslide.join(" ")+'</nobr>'
+var iedom=document.all||document.getElementById
+if (iedom)
+document.write('<span id="temp" style="visibility:hidden;position:absolute;top:-100;left:-3000">'+leftrightslide+'</span>')
+var actualwidth=''
+var cross_slide, ns_slide
+
+function fillup(){
+if (iedom){
+cross_slide=document.getElementById? document.getElementById("test2") : document.all.test2
+cross_slide2=document.getElementById? document.getElementById("test3") : document.all.test3
+cross_slide.innerHTML=cross_slide2.innerHTML=leftrightslide
+actualwidth=document.all? cross_slide.offsetWidth : document.getElementById("temp").offsetWidth
+cross_slide2.style.left=actualwidth+20
+}
+else if (document.layers){
+ns_slide=document.ns_slidemenu.document.ns_slidemenu2
+ns_slide2=document.ns_slidemenu.document.ns_slidemenu3
+ns_slide.document.write(leftrightslide)
+ns_slide.document.close()
+actualwidth=ns_slide.document.width
+ns_slide2.left=actualwidth+20
+ns_slide2.document.write(leftrightslide)
+ns_slide2.document.close()
+}
+lefttime=setInterval("slideleft()",30)
+}
+window.onload=fillup
+
+function slideleft(){
+if (iedom){
+if (parseInt(cross_slide.style.left)>(actualwidth*(-1)+8))
+cross_slide.style.left=parseInt(cross_slide.style.left)-copyspeed
+else
+cross_slide.style.left=parseInt(cross_slide2.style.left)+actualwidth+30
+
+if (parseInt(cross_slide2.style.left)>(actualwidth*(-1)+8))
+cross_slide2.style.left=parseInt(cross_slide2.style.left)-copyspeed
+else
+cross_slide2.style.left=parseInt(cross_slide.style.left)+actualwidth+30
+
+}
+else if (document.layers){
+if (ns_slide.left>(actualwidth*(-1)+8))
+ns_slide.left-=copyspeed
+else
+ns_slide.left=ns_slide2.left+actualwidth+30
+
+if (ns_slide2.left>(actualwidth*(-1)+8))
+ns_slide2.left-=copyspeed
+else
+ns_slide2.left=ns_slide.left+actualwidth+30
+}
+}
+
+
+if (iedom||document.layers){
+with (document){
+document.write('<table border="0" cellspacing="0" cellpadding="0"><td>')
+if (iedom){
+write('<div style="position:relative;width:'+sliderwidth+';height:'+sliderheight+';overflow:hidden">')
+write('<div style="position:absolute;width:'+sliderwidth+';height:'+sliderheight+';background-color:'+slidebgcolor+'" onMouseover="copyspeed=0" onMouseout="copyspeed=slidespeed">')
+write('<div id="test2" style="position:absolute;left:0;top:0"></div>')
+write('<div id="test3" style="position:absolute;left:-1000;top:0"></div>')
+write('</div></div>')
+}
+else if (document.layers){
+write('<ilayer width='+sliderwidth+' height='+sliderheight+' name="ns_slidemenu" bgColor='+slidebgcolor+'>')
+write('<layer name="ns_slidemenu2" left=0 top=0 onMouseover="copyspeed=0" onMouseout="copyspeed=slidespeed"></layer>')
+write('<layer name="ns_slidemenu3" left=0 top=0 onMouseover="copyspeed=0" onMouseout="copyspeed=slidespeed"></layer>')
+write('</ilayer>')
+}
+document.write('</td></table>')
+}
+}
+</script><span id="temp" style="visibility:hidden;position:absolute;top:-100;left:-3000"><nobr> <a href="https://barionleg.github.io/signalanalysis/" target="_self"><img src="./files/01.jpg" border="0" alt="signalanalysis" width="107" height="80"></a> <a href="https://barionleg.github.io/GalaxyViewer/" target="_self"><img src="./files/02.jpg" border="0" alt="GalaxyViewer" width="107" height="80"></a> <a href="https://barionleg.github.io/sunburst-chart/example/large-data/index.html" target="_self"><img src="./files/03.jpg" border="0" alt="sunburst-chart_large-data" width="107" height="80"></a> <a href="https://barionleg.github.io/2D-Barcode/indexII.html" target="_self"><img src="./files/04.jpg" border="0" alt="2D-Barcode" width="107" height="80"></a> <a href="https://aibolem.github.io/piano/" target="_self"><img src="./files/05.jpg" border="0" alt="sunburst-chart" width="107" height="80"></a> <a href="https://soundcloud.com/bardavelidze-irakli/gt-1783-2033" target="_self"><img src="./files/06.jpg" border="0" alt="Treaty of Georgievsk" width="107" height="80"></a></nobr></span><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td><div style="position:relative;width:733;height:80;overflow:hidden"><div style="position:absolute;width:733;height:80;background-color:#FFFFFF" onmouseover="copyspeed=0" onmouseout="copyspeed=slidespeed"><div id="test2" style="position: absolute; left: 508px; top: 0px;"><nobr> <a href="https://barionleg.github.io/signalanalysis/" target="_self"><img src="./files/01.jpg" border="0" alt="signalanalysis" width="107" height="80"></a> <a href="https://barionleg.github.io/GalaxyViewer/" target="_self"><img src="./files/02.jpg" border="0" alt="GalaxyViewer" width="107" height="80"></a> <a href="https://barionleg.github.io/sunburst-chart/example/large-data/index.html" target="_self"><img src="./files/03.jpg" border="0" alt="sunburst-chart" width="107" height="80"></a> <a href="https://barionleg.github.io/2D-Barcode/indexII.html" target="_self"><img src="./files/04.jpg" border="0" alt="2D-Barcode" width="107" height="80"></a> <a href="https://aibolem.github.io/piano/" target="_self"><img src="./files/05.jpg" border="0" alt="piano" width="107" height="80"></a> <a href="https://soundcloud.com/bardavelidze-irakli/gt-1783-2033" target="_self"><img src="./files/06.jpg" border="0" alt="Treaty of Georgievsk" width="107" height="80"></a></nobr></div><div id="test3" style="position: absolute; left: -194px; top: 0px;"><nobr> <a href="https://barionleg.github.io/signalanalysis/" target="_self"><img src="./files/01.jpg" border="0" alt="signalanalysis" width="107" height="80"></a> <a href="https://barionleg.github.io/GalaxyViewer/" target="_self"><img src="./files/02.jpg" border="0" alt="GalaxyViewer" width="107" height="80"></a> <a href="https://barionleg.github.io/sunburst-chart/example/large-data/index.html" target="_self"><img src="./files/03.jpg" border="0" alt="sunburst-chart" width="107" height="80"></a> <a href="https://barionleg.github.io/2D-Barcode/indexII.html" target="_self"><img src="./files/04.jpg" border="0" alt="2D-Barcode" width="107" height="80"></a> <a href="https://aibolem.github.io/piano/" target="_self"><img src="./files/05.jpg" border="0" alt="piano" width="107" height="80"></a> <a href="https://soundcloud.com/bardavelidze-irakli/gt-1783-2033" target="_self"><img src="./files/06.jpg" border="0" alt="Treaty of Georgievsk" width="107" height="80"></a></nobr></div></div></div></td></tr></tbody></table>
+
+
+
+     </td>
+  </tr>
+
+        </tbody></table>
+		
+</var>
+
+
+
+<!-- end of header full width -->
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        <!-- MAIN PARAGRAPH START -->
+
+        <table width="100%" cellspacing="0" cellpadding="5" border="0">
+          <tbody><tr>
+            <td width="80%" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+ <table width="600" align="left" cellspacing="0" cellpadding="20" border="0">
+                <tbody><tr>
+                  <td width="600" height="60" align="center">
+<h1>Energy and radiation wavelength</h1>
+
+<p align="center&quot;"><font size="+2" color="#B50000"><strong>NB</strong>: this page is an appendix to the</font>
+<br><a href=""><font size="+2" color="#B50000"><em>Errante's</em>
+hertzian radiation theorem.</font></a></p>
+<p align="justify">
+<a href=""><font size="+1"><strong>Understanding radiowaves.</strong>
+<br> The radio-electric transduction phenomenon originating the hertzian radiation, as discovered by this author.
+</font></a>
+</p>
+</td>
+</tr>
+
+<tr>
+ <td width="600" height="40" align="center">
+   
+    <input type="button" value="Back to previous page" onclick="javascript: history.go(-1)">
+     
+    </td>
+</tr>
+
+
+ <tr>
+            <td width="100%" height="30" align="center" valign="top" bgcolor="#FFFFFF">
+<p align="left">
+<img src="./files/new.gif" valign="middle" align="center" border="0">&nbsp;
+<a href="https://www.radiondistics.altervista.org/rf_lighting_devices/index.html" target="_top"><font size="+1" color="#B50000">Hertzian radiation
+as a convenient means for artificial lighting source.</font></a>
+<br>
+<br>
+<img src="./files/new.gif" valign="middle" align="center" border="0"> &nbsp;
+<a href=""><font size="+1" color="#B50000">Hertzian radiation
+and the <em>Hallwachs-effect</em>, better known as the <em>photovoltaic effect</em>.</font></a>
+<br>
+<br>
+<img src="./files/new.gif" valign="middle" align="center" border="0"> &nbsp;
+<a href=""><font size="+1" color="#B50000">
+Hertzian radiation studies deliver a major blow to the<br>antimatter theory origin.</font></a>
+</p>
+
+        </td></tr>
+
+             </tbody></table>
+
+
+ <table width="600" align="left" cellspacing="0" cellpadding="0" border="0">
+
+<tbody><tr>
+                  <td width="600" height="400" align="center">
+
+
+<p align="center"><img src="./files/spectrum.jpg" width="580" height="367" align="center" valign="top" alt="Radiation spectrum"></p>
+
+</td>
+
+</tr>
+
+
+
+ </tbody></table>
+
+
+
+        <table width="600" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+         <td width="600" height="200" align="left" valign="top" bgcolor="#FFFFFF">
+
+                    <h3>Frequency / Wavelength / Energy Calculator</h3>
+
+<p align="justify">
+
+<br>Frequency and wavelength of radiations are related to one another through the speed at which light travels. <br>
+<br>Equation: <big>f * λ = c</big> <br>
+Equation: <big>E = <sup>hc</sup>/<sub>λ</sub></big><br>
+
+<br>where: <br>
+	f = frequency in Hertz (Hz = <sup>1 cycle</sup>/<sub>sec</sub>) <br>
+	λ = wavelength in meters (m) <br>
+	c = the speed of light (approximately equal to 3*10<sup>8</sup> <sup>m</sup>/<sub>s</sub>)<br>
+	E = energy in electron Volts (eV) <br>
+	h = Planck's constant (6.626068 × 10<sup>-34</sup> <sup>m<sup>2</sup>kg</sup>/<sub>s</sub>)
+
+<br><br>
+</p>
+
+
+
+
+
+
+
+<p align="justify">To convert wavelength to frequency enter the wavelength in microns (μm) and press "Calculate f and E". The corresponding frequency will be in the "frequency" field in GHz.<br><br>
+OR enter the frequency in gigahertz (GHz) and press "Calculate λ and E" to convert to wavelength. <br>Wavelength will be in μm.<br>
+<br> OR enter the energy in eV and click "Calculate λ and F" and the values will appear in the corresponding fields.
+</p>
+
+
+<p>&nbsp;</p>
+
+</td>
+                </tr>
+
+
+
+                <tr>
+                  <td width="600" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+
+
+<table align="left" width="600" height="125" style="" cellpadding="2" cellspacing="0" border="1">
+
+<tbody><tr>
+   <td height="20" align="left" width="25%"> <font size="-1"><strong>Wavelength: <center>(λ)</center></strong></font> </td>
+   <td height="20" width="80%"><input type="text" name="wavelength" value="0" size="10">
+   <font><strong>[μm]</strong></font> </td>
+
+   <td height="20" align="left" width="25%"> <font size="-1"><strong>Frequency: <center>(f)</center></strong></font> </td>
+   <td height="20" width="80%"><input type="text" name="frequency" value="0" size="10">
+   <font><strong>[GHz]</strong></font> </td>
+
+   <td height="20" align="left" width="25%"> <font size="-1"><strong>Energy: <center>(E)</center></strong></font> </td>
+   <td height="20" width="80%"><input type="text" name="energy" value="0" size="10">
+   <font><strong>[eV]</strong> </font> </td>
+
+</tr>
+
+
+<tr>
+
+   <td colspan="2" height="60" width="10%" align="center">
+      <input type="button" onclick="Calculate_frequency()" value="Calculate f and E"></td>
+   <td colspan="2" height="60" width="10%" align="center">
+      <input type="button" onclick="Calculate_wavelength()" value="Calculate λ and E"></td>
+   <td colspan="2" height="60" width="10%" align="center">
+      <input type="button" onclick="Calculate_energy()" value="Calculate λ and f"></td>
+   </tr>
+
+<tr>
+   <td colspan="4" height="30" align="left" width="25%" bgcolor="#FFF000"><p align="right" <font="" size=""><strong>Radiation type:</strong> </p></td>
+   <td colspan="2" height="30" width="80%" bgcolor="#FFF000"> <span id="light_type"></span>
+   <font size="+2"> </font> </td>
+</tr>
+
+
+<tr><td colspan="6" height="60" width="10%" align="center">
+      <input type="reset" value="Reset!"> </td>
+
+</tr>
+
+
+
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+ <table width="600" cellspacing="0" cellpadding="10" border="0">
+
+<tbody><tr><td width="600" colspan="6">
+
+<h2>eV to Watt per second converter</h2>
+
+<p align="justify"><strong> 1 Watt-second (W · s) = 1 Joule (J)= 6.241 509 126 x 10<sup>18</sup> electronVolts (eV)
+
+</strong></p>
+
+
+</td>
+</tr>
+
+</tbody></table>
+
+<table width="600" cellspacing="0" cellpadding="10" border="1">
+
+
+  <tbody><tr>
+    <th width="25%">Energy (eV)</th>
+    <th width="25%" align="center">&nbsp; &nbsp; to &nbsp; &nbsp;</th>
+    <th width="25%">Watt per sec (Joule)</th>
+     <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="25%"><input id="eV" type="text" size="20" value=""></td>
+    <td width="25%"><input id="k" type="hidden" size="20" value="6.241509126e+18"></td>
+    <td width="25%"><input id="result"></td>
+    <td width="25%"><input type="button" name="go" value="Calculate!" onclick="return divide()" class="calculate"></td>
+
+  </tr>
+<tr>
+<td colspan="4" align="center"><input type="reset" value="Reset!"> </td>
+</tr>
+
+</tbody></table>
+
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+<table width="600" cellspacing="0" cellpadding="10" border="0">
+     <tbody><tr><td bgcolor="#ffffff" valign="top">
+       <h2>Power to photon rate converter.</h2>
+         <p><strong></strong></p>
+
+
+<script type="text/javascript"><!--
+function calculate() {
+ var c = new Number(); var a,b,m,u,ua,ia,ib,oa;ia=parseFloat(document.calculator.ia.value);u=document.calculator.uia.options[document.calculator.uia.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };ia=Math.pow(((ia-a)/m),(1/b));
+ib=parseFloat(document.calculator.ib.value);u=document.calculator.uib.options[document.calculator.uib.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };ib=Math.pow(((ib-a)/m),(1/b));
+
+oa = ia*ib/1.9864452e-25;
+u=document.calculator.uoa.options[document.calculator.uoa.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };oa=Math.pow(oa,b)*m+a;
+u=document.calculator.puoa.options[document.calculator.puoa.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };oa=oa/m;
+if(oa.toPrecision) { oa=oa.toPrecision(6); } document.calculator.oa.value = oa;
+ return false;
+}
+// --></script>
+
+<form onsubmit="return calculate()" name="calculator" action="https://www.radiondistics.altervista.org/frequency_wavelength_energy_radiation_calculator.htm">
+<table class="calc" border="0" cellspacing="1" cellpadding="0" width="300"><tbody><tr><td><small><i>Power</i></small></td><td><input type="text" name="ia" value="0" size="10" class="infield" onblur="calculate();"></td><td><select name="uia" onchange="calculate();" class="infield"><option value="1:1:0" selected="selected">W (kg⋅m²/s²)</option>
+<option value="0:1:0">- SI UNITS -</option>
+<option value="1000000:1:0">µW</option>
+<option value="1000:1:0">mW</option>
+<option value="0.001:1:0">kW</option>
+<option value="1e-06:1:0">MW</option>
+<option value="1e-09:1:0">GW</option>
+<option value="0:1:0">--- OTHER ---</option>
+<option value="2655.223715:1:0">ft⋅lbf/h</option>
+<option value="0.737562149:1:0">ft⋅lbf/s</option>
+<option value="0.238845897:1:0">cal/s</option>
+<option value="0.01433:1:0">kCal/min</option>
+<option value="0.859845:1:0">kCal/hour</option>
+<option value="0.001359621617:1:0">horsepower</option>
+<option value="0.000947817886:1:0">BTU/s</option>
+<option value="2.6048450117218e-27:1:0">Suns</option>
+</select></td></tr>
+<tr><td><small><i>Wavelength</i></small></td><td><input type="text" name="ib" value="0" size="10" class="infield" onblur="calculate();"></td><td><select name="uib" onchange="calculate();" class="infield">
+<option value="0:1:0">--- METRIC ---</option>
+<option value="1000000000000:1:0">pm</option>
+<option value="1000000000:1:0">nm</option>
+<option value="1000000:1:0">microns (µm)</option>
+<option value="1000:1:0">mm</option>
+<option value="100:1:0">cm</option>
+<option value="1:1:0" selected="selected">m</option>
+<option value="0.001:1:0">km</option>
+<option value="0:1:0">- SCIENTIFIC -</option>
+<option value="6.187153983e+34:1:0">Planck</option>
+<option value="18897268778:1:0">Bohrs</option>
+<option value="10000000000:1:0">Angstrom</option>
+<option value="3.33569906e-09:1:0">light-seconds</option>
+<option value="1.057000834e-16:1:0">light-years</option>
+<option value="6.684587123e-12:1:0">au</option>
+<option value="3.240755744e-17:1:0">parsecs</option>
+</select></td></tr>
+<tr><td colspan="3"><hr></td></tr>
+<tr><td><small><i>Photons</i></small></td><td><input type="text" name="oa" value="Wait" size="10" readonly="readonly" class="outfield"></td><td><select name="uoa" onchange="calculate();" class="outfield"><option value="1:1:0" selected="selected">&nbsp;</option>
+<option value="1000000:1:0">millionths</option>
+<option value="1000:1:0">thousandths</option>
+<option value="0.0833333333333333:1:0">dozen</option>
+<option value="0.05:1:0">score</option>
+<option value="0.00694444444444444:1:0">gross</option>
+<option value="0.001:1:0">thousand</option>
+<option value="1e-06:1:0">million</option>
+<option value="1e-09:1:0">billion</option>
+<option value="1e-12:1:0">trillion</option>
+<option value="1.660538783163e-24:1:0">moles</option>
+</select></td></tr>
+<tr><td></td><td><small><i>per</i></small></td><td><select name="puoa" onchange="calculate();" class="outfield"><option value="1:1:0" selected="selected">s</option>
+<option value="1000:1:0">ms</option>
+<option value="1000000:1:0">µs</option>
+<option value="1000000000:1:0">ns</option>
+
+
+</select></td></tr>
+<tr>
+<td>
+</td>
+<td><input type="button" name="go" value="Calculate!" onclick="return calculate()" class="calculate"></td>
+<td><input type="reset" value="Reset!"> </td>
+
+
+</tr></tbody></table>
+</form></td></tr>
+</tbody></table>
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+
+</td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+
+ <table width="600" cellspacing="0" cellpadding="10" border="0">
+<tbody><tr>
+<td width="600" colspan="6">
+
+<h2>Energy of a single photon at a given frequency</h2>
+
+<p align="justify"><strong> E = h·f </strong></p>
+
+<p align="justify">where: <br>
+	f = frequency in Hertz (conversion table is at the bottom of this page) <br>
+	E = energy in electron Volts (eV) <br>
+	h = Planck's constant (6.626068 × 10<sup>-34</sup> <sup>m<sup>2</sup>kg</sup>/<sub>s</sub>)<br>
+        f = frequency in Hertz (an equivalence calculator is at the bottom of this page)
+
+
+</p>
+
+</td>
+</tr>
+
+</tbody></table>
+
+
+
+
+<table width="600" cellspacing="0" cellpadding="10" border="1">
+
+
+  <tbody><tr>
+    <th width="25%">Frequency (Hz)</th>
+    <th width="25%">&nbsp; &nbsp; &nbsp; &nbsp;</th>
+    <th width="25%">Energy (Joule)</th>
+     <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="25%"><input id="v" type="text" size="20" value=""></td>
+    <td width="25%"><input id="h" type="hidden" size="20" value="6.626068e-34"></td>
+    <td width="25%"><input id="result2"></td>
+    <td width="25%"><input type="button" name="go" value="Calculate!" onclick="return multiply()" class="calculate"></td>
+
+  </tr>
+<tr>
+<td colspan="4" align="center"><input type="reset" value="Reset!"> </td>
+</tr>
+
+</tbody></table>
+
+
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="60&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+</td>
+
+</tr>
+
+<tr>
+                  <td width="100%" height="60&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<form>
+
+
+<table width="600" align="center" cellpadding="5" cellspacing="0" bgcolor="#cacaca" border="0">
+
+
+<tbody><tr>
+
+<td align="center" colspan="2">
+
+<h2>Power level variation by dB value </h2>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Power level (Watt)
+
+</td>
+
+<td>
+
+
+<input type="text" value="enter power value" name="tpo" size="18" onfocus="clear_field(this)">
+
+
+<input type="hidden" value="1" name="tpounit" size="3" onfocus="clear_field(this)">
+
+
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Gain or attenuation (dB or -dB)
+
+</td>
+
+<td>
+
+<input type="text" value="enter dB or -dB value" name="antgain" size="18" onfocus="clear_field(this)">
+
+
+<input type="hidden" value="0" name="antgainunit" size="3" onfocus="clear_field(this)">
+
+
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td align="center" colspan="2">
+
+Resulting power level
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+
+<input type="text" name="erpdbw" size="18" readonly=""> dBW =
+
+</td>
+
+<td>
+
+<input type="text" name="erpwatts" size="18" readonly=""> Watts
+
+</td>
+
+</tr>
+
+<tr>
+
+<td align="center" colspan="2">
+
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td align="center" colspan="2">
+
+<input type="button" value="Calculate" onclick="txant(this.form)">
+
+&nbsp;&nbsp;&nbsp;
+
+<input type="Reset" value="Clear Values">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<input type="hidden" name="erpdbwr" size="1" readonly="">
+
+</td>
+
+<td>
+
+<input type="hidden" name="erpwattsr" size="1" readonly="">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td align="center" colspan="2">
+
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<input type="hidden" name="eirpdbw" size="1" readonly="">
+
+</td>
+
+<td>
+
+<input type="hidden" name="eirpwatts" size="1" readonly="">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td align="center" colspan="2">
+
+
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<input type="hidden" name="eirpdbwr" size="1" readonly="">
+
+</td>
+
+<td>
+
+<input type="hidden" name="eirpwattsr" size="1" readonly="">
+
+</td>
+
+</tr>
+
+</tbody></table>
+
+</form>
+
+
+</td>
+
+</tr>
+
+</tbody></table>
+
+
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="60&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+</td>
+
+</tr>
+
+<tr>
+                  <td width="100%" height="60&quot;" align="left" valign="top">
+
+
+
+
+<table width="600" align="center" cellpadding="15" cellspacing="0" bgcolor="#cacaca" border="0">
+
+<tbody><tr>
+ <td colspan="3" align="center">
+  <h2>Path loss in free space calculator</h2>
+ </td>
+</tr>
+
+<form name="lcf"></form>
+<tr>
+ <td align="right">
+ Select<br> a <br> distance unit:
+ </td>
+ <td align="left" colspan="2">
+ <input type="radio" name="DIST" value="m" onclick="setunits(this.form, &#39;m&#39;)"> distance in meters<br>
+ <input type="radio" name="DIST" value="km" onclick="setunits(this.form, &#39;km&#39;)"> distance in km<br>
+ <input type="radio" name="DIST" value="mkm" onclick="setunits(this.form, &#39;mkm&#39;)"> distance in million km<br>
+ <input type="radio" name="DIST" value="lj" onclick="setunits(this.form, &#39;lj&#39;)"> distance in lightyears</td>
+</tr>
+
+
+
+
+<tr>
+  <td align="right">Frequency:</td>
+  <td><input type="TEXT" name="freq" size="7"><input type="TEXT" name="funit" size="5"></td>
+  <td align="left"> Input frequency</td>
+</tr>
+
+<tr>
+  <td align="right">Gain TX antenna:</td>
+  <td><input type="TEXT" name="gain1" size="7" value="0"><input type="TEXT" name="g1unit" size="5"></td>
+  <td align="left"> Input gain TX antenna</td>
+</tr>
+
+<tr>
+  <td align="right">Gain RX antenna:</td>
+  <td><input type="TEXT" name="gain2" size="7" value="0"><input type="TEXT" name="g2unit" size="5"></td>
+  <td align="left"> Input gain RX antenna</td>
+</tr>
+
+<tr>
+  <td align="right">Distance:</td>
+  <td><input type="TEXT" name="dist" size="7" value="1"><input type="TEXT" name="dunit" size="5"></td>
+  <td align="center"><input type="BUTTON" value="Calculate" onclick="calcdist(this.form)"></td>
+</tr>
+
+<tr>
+  <td align="right"><strong>Path loss:</strong></td>
+  <td><input type="TEXT" name="att" size="7"><input type="TEXT" name="aunit" size="5"></td>
+  <td align="center"><input type="BUTTON" value="Calculate" onclick="calcloss(this.form)"></td>
+</tr>
+
+<tr>
+<td colspan="4" align="center"><input type="reset" value="Reset!"> </td>
+</tr>
+
+</tbody></table>
+
+
+
+
+</td>
+</tr>
+
+
+
+</tbody></table>
+
+
+
+
+
+<table width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td width="100%" height="60&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+
+
+<p align="center">&nbsp;</p>
+
+</td>
+
+</tr>
+                <tr>
+                  <td width="600" height="40">
+
+
+
+<h3>Wavelength to frequency and viceversa multiple output converter.</h3>
+<p><strong>Enter a valid value into a field below. Select a result in any which one field and hit your keyboard "<em>delete</em>" button to clear all fields.</strong></p>
+
+
+<!-- FREQUENCY WAVELENGTH CONVERTER START -->
+<form style="padding:0;margin:0" name="cat=Frequency_Wavelength;focuscolor=blue;focusweight=bold">
+<table align="center" width="500" style="font-family:Verdana;font-size:100%" border="1" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding:1.2ex 1.5ex 0.2ex;width:50%;font-family:Verdana;font-size:13px"><span name="hertz" id="hertz">hertz [Hz]:</span></td><td style="padding:1.2ex 1.5ex 0.2ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="hertz;base=1"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="exahertz" id="exahertz">exahertz [EHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="exahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="petahertz" id="petahertz">petahertz [PHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="petahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="terahertz" id="terahertz">terahertz [THz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="terahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="gigahertz" id="gigahertz">gigahertz [GHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="gigahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="megahertz" id="megahertz">megahertz [MHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="megahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="kilohertz" id="kilohertz">kilohertz [kHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="kilohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="hectohertz" id="hectohertz">hectohertz [hHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="hectohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="dekahertz" id="dekahertz">dekahertz [daHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="dekahertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="decihertz" id="decihertz">decihertz [dHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="decihertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="centihertz" id="centihertz">centihertz [cHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="centihertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="millihertz" id="millihertz">millihertz [mHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="millihertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="microhertz" id="microhertz">microhertz [µHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="microhertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="nanohertz" id="nanohertz">nanohertz [nHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="nanohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="picohertz" id="picohertz">picohertz [pHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="picohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="femtohertz" id="femtohertz">femtohertz [fHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="femtohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="attohertz" id="attohertz">attohertz [aHz]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="attohertz"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="cycle/second" id="cycle/second">cycle/second:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="cycle/second"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in exametres" id="wavelength in exametres">wavelength in exametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in exametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in petametres" id="wavelength in petametres">wavelength in petametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in petametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in terametres" id="wavelength in terametres">wavelength in terametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in terametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in gigametres" id="wavelength in gigametres">wavelength in gigametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in gigametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in megametres" id="wavelength in megametres">wavelength in megametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in megametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in kilometres" id="wavelength in kilometres">wavelength in kilometres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in kilometres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in hectometres" id="wavelength in hectometres">wavelength in hectometres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in hectometres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in dekametres" id="wavelength in dekametres">wavelength in dekametres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in dekametres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in metres" id="wavelength in metres">wavelength in metres [m]:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in metres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in decimetres" id="wavelength in decimetres">wavelength in decimetres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in decimetres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in centimetres" id="wavelength in centimetres">wavelength in centimetres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in centimetres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in millimetres" id="wavelength in millimetres">wavelength in millimetres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in millimetres"></td></tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="wavelength in micrometres" id="wavelength in micrometres">wavelength in micrometres:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="wavelength in micrometres"></td>
+</tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="Electron Compton wavelength" id="Proton Compton wavelength">Electron Compton wavelength:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="Electron Compton wavelength"></td>
+</tr><tr><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><span name="Proton Compton wavelength" id="Proton Compton wavelength">Proton Compton wavelength:</span></td><td style="padding:0.2ex 1.5ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="Proton Compton wavelength"></td>
+</tr><tr><td style="padding:0.2ex 1.5ex 1.2ex;width:50%;font-family:Verdana;font-size:13px"><span name="Neutron Compton wavelength" id="Neutron Compton wavelength">Neutron Compton wavelength:</span></td><td style="padding:0.2ex 1.5ex 1.2ex;width:50%;font-family:Verdana;font-size:13px"><input style="width:100%;font-family:Verdana;font-size:100%" type="text" name="Neutron Compton wavelength"></td></tr></tbody></table>
+</form>
+<script type="text/javascript" src="./files/converter3.js"></script><script language="javascript" src="./files/Frequency_Wavelength.js"></script>
+<!-- FREQUENCY WAVELENGTH CONVERTER END -->
+
+  </td>
+   </tr>
+    </tbody></table>
+
+<p></p>
+
+<table align="center" width="600" cellspacing="0" cellpadding="5" border="1">
+            <tbody><tr bgcolor="#FFFFCC"> <td align="center" height="50" colspan="5" nowrap="">
+<p><strong>SI - Metric system prefixes<strong></strong></strong></p><strong><strong>
+  </strong></strong></td>
+  </tr>
+
+
+<tr bgcolor="#FFFFCC">
+              <td width="50" nowrap=""><font face="Arial, Helvetica, sans-serif" size="-1"><strong>FACTOR</strong></font></td>
+              <td width="222" nowrap="">
+                <div align="center"><font size="-1"><strong><font face="Arial, Helvetica, sans-serif">...or
+                  in full ...</font></strong></font></div>
+              </td>
+              <td width="62" nowrap="">
+                <div align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>or
+                  in<br>
+                  words</strong></font></div>
+              </td>
+              <td width="40" nowrap="">
+                <div align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>SI
+                  <br>
+                  PREFIX</strong></font></div>
+              </td>
+              <td width="49" nowrap="">
+                <div align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>SI
+                  <br>
+                  SYMBOL</strong></font></div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" width="50" nowrap="" height="290"> <font face="Arial, Helvetica, sans-serif" size="2">1,0E+24<br>
+                1,0E+21<br>
+                1,0E+18<br>
+                1,0E+15<br>
+                1,0E+12<br>
+                1,0E+9<br>
+                1,0E+6<br>
+                1,0E+3<br>
+                1,0E+2<br>
+                1,0E+1<br>
+                1,0E-1<br>
+                1,0E-2<br>
+                1,0E-3<br>
+                1,0E-6<br>
+                1,0E-9<br>
+                1,0E-12<br>
+                1,0E-15<br>
+                1,0E-18 <br>
+                1,0E-21<br>
+                1,0E-24 </font></td>
+              <td valign="top" width="222" nowrap="" height="290"><font face="Arial, Helvetica, sans-serif" size="2">1
+                000 000 000 000 000 000 000 000<br>
+                1 000 000 000 000 000 000 000<br>
+                1 000 000 000 000 000 000<br>
+                1 000 000 000 000 000<br>
+                1 000 000 000 000<br>
+                1 000 000 000 <br>
+                1 000 000<br>
+                1 000<br>
+                100<br>
+                10<br>
+                0,1<br>
+                0,01<br>
+                0,001<br>
+                0,000 001<br>
+                0,000 000 001<br>
+                0,000 000 000 001<br>
+                0,000 000 000 000 001<br>
+                0,000 000 000 000 000 001<br>
+                0,000 000 000 000 000 000 001<br>
+                0,000 000 000 000 000 000 000 001</font></td>
+              <td valign="top" width="62" height="290"><font face="Arial, Helvetica, sans-serif" size="2">septillion<br>
+                sextillion<br>
+                quintillion<br>
+                quadrillion<br>
+                trillion<br>
+                billion<br>
+                million<br>
+                thousand<br>
+                hundred<br>
+                ten<br>
+                tenth<br>
+                hundredth<br>
+                thousandth<br>
+                millionth <br>
+                billionth <br>
+                trillionth <br>
+                quadrillionth<br>
+                quintillionth<br>
+                sextillionth<br>
+                septillionth </font></td>
+              <td valign="top" width="40" height="290">
+                <div align="center"><font face="Arial, Helvetica, sans-serif" size="2">yotta-<br>
+                  zetta-<br>
+                  exa-<br>
+                  peta-<br>
+                  tera-<br>
+                  giga-<br>
+                  mega-<br>
+                  kilo-<br>
+                  hecto-<br>
+                  deca-<br>
+                  deci-<br>
+                  centi-<br>
+                  milli-<br>
+                  micro-<br>
+                  nano-<br>
+                  pico-<br>
+                  femto-<br>
+                  atto- <br>
+                  zepto-<br>
+                  yocto- </font></div>
+              </td>
+              <td valign="top" width="49" nowrap="" height="290">
+                <div align="center"><font face="Arial, Helvetica, sans-serif" size="2">Y<br>
+                  Z<br>
+                  E<br>
+                  P<br>
+                  T<br>
+                  G<br>
+                  M<br>
+                  k<br>
+                  h<br>
+                  da<br>
+                  d<br>
+                  c<br>
+                  m<br>
+                  µ<br>
+                  n<br>
+                  p<br>
+                  f<br>
+                  a <br>
+                  z<br>
+                  y </font></div>
+              </td>
+            </tr>
+          </tbody></table>
+
+
+
+
+<p></p><p></p>
+
+
+
+<p align="center"><img src="./files/solar_radiation_spectrum.jpg" width="580" height="431" alt="Solar radiation spectrum"></p>
+
+
+
+
+
+                    
+
+            </td><!-- END of MAIN PARAGRAPH -->
+            <!-- SIDE PARAGRAPH START -->
+
+            <td width="20%" align="right" valign="top" bgcolor="#FFFFFF">
+              <table width="100" bgcolor="#FFFFFF" border="0" cellspacing="0" cellpadding="0">
+                <tbody><tr>
+                  <td width="100%" valign="top" align="center">
+                    <div style="display: table; border: 1px solid blue; padding: 0px; white-space: nowrap;">
+                      <p align="center"><img src="./files/book.jpg" width="100" height="62" valign="top" border="0" vspace="0" hspace="0" alt="Related topics"></p>
+
+                      <p> </p>
+
+                      <p align="center"><a href=""><em>Errante's</em><br>
+                      hertzian<br>
+                      radiation<br>
+                      theorem</a></p>
+
+
+
+                      <p> </p>
+
+                      <p align="center"><a href="https://www.radiondistics.altervista.org/detector.htm"><em>Errante's</em><br>
+                      hertzian<br>
+                      radiation<br>
+                      detector</a></p>
+
+                      <p> </p>
+
+                      <p align="center"><a href="https://www.radiondistics.altervista.org/balanced_lines.htm">Balanced<br>
+                      transmission<br>
+                      lines<br>
+                      in a<br>
+                      progressive<br>
+                      wave<br>
+                      regime</a></p>
+
+                      <p> </p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody></table><!-- END of side PARAGRAPH  -->
+            </td>
+          </tr>
+        </tbody></table>
+
+        <p> </p>
+
+        <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center">
+          <tbody><tr>
+            <td align="center" width="100%">
+              <p align="justify"> </p>
+
+              <p align="center">All the concepts, methods, designs and devices presented on this
+              web site<br>
+              are the original novelty works of <em>FRANCESCO ERRANTE</em>.<br>
+              Patents &amp; Copyright © 1985-<script language="JavaScript" type="text/javascript">
+
+
+<!--
+
+
+    today=new Date();
+
+
+    y0=today.getFullYear();
+
+
+    document.write(y0);
+
+
+//--->
+
+
+</script>2024 of <em>FRANCESCO ERRANTE</em>.<br>
+              <br>Material is governed by the Copyright, Designs and Patent Act.
+<br>No reproduction, in whole or in part, without written permission.<br>
+Copies of these documents made by electronic or mechanical means, including information storage and retrieval systems, may only be employed for personal use.<br>
+All rights reserved.</p>
+
+
+              <p align="center"><a href="https://www.animalliberationfront.com/" target="_blank">
+                <img src="./files/alf_banner.jpg" alt="Anima Liberation Front" width="468" height="60" align="middle"></a>
+              </p>
+
+
+            </td>
+          </tr>
+        </tbody></table>
+
+<!-- Copyright notice start -->
+
+
+
+        <table cellspacing="0" cellpadding="5" width="100%" border="0">
+          <tbody><tr>
+            <td height="20" align="center" valign="bottom">
+              <hr color="#1C60AB" noshade="" align="center" width="90%">
+
+              <p><font size="-3">All rights reserved. Copyright © 1985-<script language="JavaScript" type="text/javascript">
+
+<!--
+
+    today=new Date();
+
+    y0=today.getFullYear();
+
+    document.write(y0);
+
+//--->
+
+</script>2024 <a href="https://www.radiondistics.altervista.org/contact.htm">Francesco Errante</a><br>
+              www.Radiondistics.com - Tel.(+39) 339.180.1313</font></p>
+            </td>
+          </tr>
+        </tbody></table><!-- END of Copyright notice -->
+        <!-- START of BOTTOM PARAGRAPH -->
+      </td>
+    </tr>
+
+    <tr>
+      <!-- row 4 -->
+
+      <td width="167" height="23" align="center"><img height="23" src="./files/bottom_left.jpg" width="167" border="0"></td>
+
+      <td width="733" align="right" background="./files/bottom_middle.jpg"><img height="23" src="./files/bottom_right.jpg" border="0"></td>
+    </tr>
+  </tbody></table>
+
+<!-- statcounter -->
+
+  <table width="780" cellspacing="0" cellpadding="20" align="center" border="0">
+    <tbody><tr>
+      <td height="40" align="center">
+        <script type="text/javascript" language="javascript">
+
+var sc_project=731660;
+
+var sc_partition=6;
+
+var sc_security="fbd4ad68";
+
+</script> <script type="text/javascript" language="javascript" src="./files/counter.js">
+</script><span class="statcounter"><a id="sc_counter_731660" class="statcounter" href="https://www.statcounter.com/" target="_blank"><img src="./files/t.php" alt="StatCounter - Free Web Tracker and Counter" border="0" undefined=""></a></span> <noscript><a href="http://www.statcounter.com/" target="_blank"><img src=
+"http://c7.statcounter.com/counter.php?sc_project=731660&amp;java=0&amp;security=fbd4ad68"
+        alt="free website hit counter" border="0"></a></noscript>
+      </td>
+    </tr>
+  </tbody></table>
+
+
+
+
+</form><script src="./files/defer.js"></script></body></html>
