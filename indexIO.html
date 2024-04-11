@@ -881,8 +881,8 @@ function googleTranslateElementInit() {
                               <td bgcolor="#ffffff" valign="top">
                                  <center><h2>Power to photon rate converter.</h2>
                                  <p><strong></strong></p>
-                                 <script type="text/javascript"><!--
-                                    function calculate() {
+                                 <!-- <script type="text/javascript">
+                                   function calculate() {
                                      var c = new Number(); var a,b,m,u,ua,ia,ib,oa;ia=parseFloat(document.calculator.ia.value);u=document.calculator.uia.options[document.calculator.uia.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };ia=Math.pow(((ia-a)/m),(1/b));
                                     ib=parseFloat(document.calculator.ib.value);u=document.calculator.uib.options[document.calculator.uib.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };ib=Math.pow(((ib-a)/m),(1/b));
                                     
@@ -891,9 +891,7 @@ function googleTranslateElementInit() {
                                     u=document.calculator.puoa.options[document.calculator.puoa.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };oa=oa/m;
                                     if(oa.toPrecision) { oa=oa.toPrecision(6); } document.calculator.oa.value = oa;
                                      return false;
-                                    }
-                                    // -->
-                                 </script>
+                                    }</script>-->
       <center><form onsubmit="return calculate()" name="calculator" action="">
       <table class="calc" align="center"  border="0" cellspacing="1" cellpadding="0" width="300"><tbody><tr><td><small><i>Power</i></small></td><td><input type="text" name="ia" value="0" size="10" class="infield" onblur="calculate();"></td><td><select name="uia" onchange="calculate();" class="infield"><option value="1:1:0" selected="selected">W (kg⋅m²/s²)</option>
       <option value="0:1:0">- SI UNITS -</option>
@@ -931,7 +929,7 @@ function googleTranslateElementInit() {
       <option value="3.240755744e-17:1:0">parsecs</option>
       </select></td></tr>
       <tr><td colspan="3"><hr></td></tr>
-      <tr><td><small><i>Photons</i></small></td><td><input type="text" name="oa" value="Wait" size="10" readonly="readonly" class="outfield"></td><td><select name="uoa" onchange="calculate();" class="outfield"><option value="1:1:0" selected="selected">&nbsp;</option>
+      <tr><td><small><i>Photons</i></small></td><td><input type="text" name="oa" value="0" size="10" readonly="readonly" class="outfield"></td><td><select name="uoa" onchange="calculate();" class="outfield"><option value="1:1:0" selected="selected">&nbsp;</option>
       <option value="1000000:1:0">millionths</option>
       <option value="1000:1:0">thousandths</option>
       <option value="0.0833333333333333:1:0">dozen</option>
