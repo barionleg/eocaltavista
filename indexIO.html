@@ -705,7 +705,7 @@ function googleTranslateElementInit() {
          <table width="100%" cellspacing="0" cellpadding="5" border="0">
             <tbody>
                <tr>
-                  <td width="80%" align="left" valign="top" bgcolor="#FFFFFF">
+                  <td width="80%" align="center" valign="top" bgcolor="#FFFFFF">
                      <table  align="center" width="600" align="left" cellspacing="0" cellpadding="20" border="0">
                         <tbody>
                            <tr>
@@ -726,6 +726,38 @@ function googleTranslateElementInit() {
                            </tr>
                         </tbody>
                      </table>
+					        
+
+							<table width="100%" cellspacing="0" cellpadding="5" border="0">
+            <tbody>
+               <tr>
+                  <td width="80%" align="center" valign="top" bgcolor="#FFFFFF">
+                     <table  align="center" width="1234" align="left" cellspacing="0" cellpadding="20" border="0">
+                        <tbody>
+                           <tr>
+                              <td width="1234" height="60" align="center">
+                                 <p align="center">
+                                 <center><h1>VAWELENGTH ELEMENTS WAY TO STARgÅTES</h1>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+					 <p></p>
+                     <table  align="center" width="1234" align="left" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                           <tr>
+                              <td width="1234" height="400" align="center">
+                                 <p align="center"><img src="./files/vawelength.jpg" width="1234" height="400" align="center" valign="top" alt="elements spectrum"></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+					 
+					 	        <p></p><p></p>
+      <p align="center"><a href="https://barionleg.github.io/chords_synesthesia/" ><img src="./files/colorScales.gif" width="601" height="348" alt="color scales notes by Isaak Newton 1704 & link georgia's ©olorSynthesiÅ 2022"></a></p>
+	       <p></p><p></p>
+					 
+					 
                      <table  align="center" width="600" cellspacing="0" cellpadding="0" border="0">
                         <tbody>
                            <tr>
@@ -866,7 +898,354 @@ function googleTranslateElementInit() {
                            </tr>
                         </tbody>
                      </table>
-                     <table  align="center" align="center" width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+					 
+					 
+                     <table  align="center" width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                           <tr>
+                              <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+                                 <p align="center">&nbsp;</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <table align="center"  width="600" cellspacing="0" cellpadding="10" border="1">
+                        <tbody>
+                           <tr>
+                              <td width="600" colspan="6">					 
+					 <form id="cp_calculatedfieldsf_pform_1">
+<div id="calculator" style="background-color: #ebecec; padding: 15px; border-radius: 20px;">
+<h2>Watts To Photons Per Second Calculator</h2>
+<p> </p>
+<center><p align="justify"><strong> OBS! 500 nm = 0.0000005 m </strong></p></center>
+<br>
+<div class="tabs" style="display: flex;">
+<div onclick="showBasic()" style="cursor: pointer; font-size: 16px; padding: 5px; color: rgb(0, 147, 218); text-align: center; display: inline-block; width: 50%; border-right: 1px solid rgb(0, 147, 218); background-color: transparent;" onmouseover="this.style.backgroundColor='#ddd'" onmouseout="this.style.backgroundColor='transparent'">Basic Calculator</div>
+<div onclick="showAdvanced()" style="cursor: pointer; font-size: 16px; padding: 5px; color: rgb(0, 147, 218); text-align: center; display: inline-block; width: 50%; background-color: transparent;" onmouseover="this.style.backgroundColor='#ddd'" onmouseout="this.style.backgroundColor='transparent'">Advanced Calculator</div>
+</div>
+<div id="basicCalculator" style="display: block;">
+<label for="power">Power (W)</label><br>
+<input type="number" id="power" style="width: 100%;"><br>
+<label for="wavelength">Wavelength (m)</label><br>
+<input type="number" id="wavelength" style="width: 100%;"><br>
+<label for="photons">Photons per Second (PS)</label><br>
+<input type="number" id="photons" style="width: 100%;" readonly=""><br><br>
+</div>
+<div id="advancedCalculator" style="display: none;">
+<label for="advPower">Power Range Start (W)</label><br>
+<input type="number" id="advPower" style="width: 100%;"><br>
+<label for="advPowerEnd">Power Range End (W)</label><br>
+<input type="number" id="advPowerEnd" style="width: 100%;"><br>
+<label for="advWavelength">Wavelength (m)</label><br>
+<input type="number" id="advWavelength" style="width: 100%;"><br>
+<label for="advPhotons">Photons per Second Range (PS)</label><br>
+<input type="number" id="advPhotons" style="width: 100%;" readonly=""><br><br>
+</div>
+<button type="button" onclick="calculate()" style="background-color: #0093da; color: white; width: 49%;">Calculate</button>
+<button type="button" onclick="resetFields()" style="background-color: #0093da; color: white; width: 49%;">Reset</button>
+</div>
+<script>
+function showBasic() {
+document.getElementById("basicCalculator").style.display = 'block';
+document.getElementById("advancedCalculator").style.display = 'none';
+}
+function showAdvanced() {
+document.getElementById("advancedCalculator").style.display = 'block';
+document.getElementById("basicCalculator").style.display = 'none';
+}
+function calculate() {
+const h = 6.62607015e-34;
+if (document.getElementById("basicCalculator").style.display !== 'none') {
+const power = parseFloat(document.getElementById("power").value);
+const wavelength = parseFloat(document.getElementById("wavelength").value);
+if (!isNaN(power) && !isNaN(wavelength)) {
+document.getElementById("photons").value = (power * wavelength) / h;
+} else {
+alert("Fill in all fields to calculate photons per second.");
+}
+} else {
+const powerStart = parseFloat(document.getElementById("advPower").value);
+const powerEnd = parseFloat(document.getElementById("advPowerEnd").value);
+const wavelength = parseFloat(document.getElementById("advWavelength").value);
+if (!isNaN(powerStart) && !isNaN(powerEnd) && !isNaN(wavelength)) {
+const avgPower = (powerStart + powerEnd) / 2;
+document.getElementById("advPhotons").value = (avgPower * wavelength) / h;
+} else {
+alert("Fill in all fields to calculate the average photons per second for the power range.");
+}
+}}
+function resetFields() {
+document.getElementById("power").value = '';
+document.getElementById("wavelength").value = '';
+document.getElementById("photons").value = '';
+document.getElementById("advPower").value = '';
+document.getElementById("advPowerEnd").value = '';
+document.getElementById("advWavelength").value = '';
+document.getElementById("advPhotons").value = '';
+}
+</script>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+</div>
+
+                    <table  align="center" width="600" height="30" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                           <tr>
+                              <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
+                                 <p align="center">&nbsp;</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <table align="center"  width="600" cellspacing="0" cellpadding="10" border="1">
+                        <tbody>
+                           <tr>
+                              <td width="600" colspan="6">					 
+
+                <div class="cmp-title title-subtitle">
+    <h1 id="element-id-18040e6e-7d6c-39cb-9263-351556951413">Photon Flux to Radiant Flux Calculator</h1>
+
+
+    
+
+</div>
+<div class="container">
+
+    
+    
+    
+    
+        <div class="cmp-container Section">
+            
+            <div class="Inner">
+                <div class="hpk-free-html"><div class="cmp-free-html">
+<!-- Start Contents Modules -->
+<div class="Wrap__Common Contents Layout__ContentSingle">
+  <div class="Inner">
+  <main class="Contents__Main">
+  <header class="Main__Header">
+  <!--<h1>MPPC (SiPM) Linearity</h1>-->
+  </header>
+  <div class="Main__Body">
+  <div class="Wrap__Content">
+  <section class="Section">	
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script><script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <!-- <script type="text/javascript" src="mppc_linearity_calculator.js"></script> -->
+<!-- <script type="text/javascript" src="/content/dam/hamamatsu-photonics/sites/static/hc/interactive-tools/mppc_linearity_calculator/mppc_linearity_calculator.js"></script> -->
+
+  <style type="text/css">ul, ol {
+    padding-left: 40px;
+  }
+
+  li {
+    margin-bottom: 10px
+  }
+
+  code {
+    padding: 3px 5px;
+    margin: 0 2px;
+    white-space: nowrap;
+    background-color: #f8f8f8;
+    color: #E91E63;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+
+  .formula code {
+    background: transparent; 
+    color: black;
+    white-space: normal;
+  }
+
+  .input-container {
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  label {
+    line-height: 22px;
+    color: black;
+    font-size: 12px;
+    display: block;
+    font-weight: bold;
+  }
+
+  input {
+    font: inherit;
+    color: #c50e1f;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border: 0;
+    border-bottom: 2px solid #c50e1f;
+    width: 120px;
+    margin-right: 14px;
+    text-align: center;
+  }
+
+  select {
+    font: inherit;
+    color: black;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border: 0;
+    border-bottom: 2px solid #c50e1f;
+    width: 75;
+    margin-right: 14px;
+    padding: 14px 6px 0px 6px;
+  }
+
+  .formula input {
+    width: 60px;
+    margin-right: 0;
+  }
+
+  button {
+    background: #c50e1f;
+    color: white;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    border-radius: 4px;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #555;}
+
+  .settings {
+    padding: 14px;
+    margin: 0 2px;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    border: 1px solid #EEEEEE;
+  }
+
+  .slidecontainer {
+    width: 100%;
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 7px;
+    border-radius: 5px; 
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .slider:hover {
+    opacity: 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #555;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #555;
+    cursor: pointer;
+  }
+  </style>
+  <div class="Section__Body">
+<h3>Converting Photon Energy from Wavelength</h3>
+    <p>The energy of the photon \(E\) can be be calculated using the equation \( E = {hc \over \lambda} \).
+      In this equation Planck's constant \(h\) and the speed of light in vacuum \(c\) are known values, so only the
+      wavelength \(\lambda\) is needed to calculate the energy.</p>
+    <h3>Converting Photon Flux \(photon \over {second} \) to Radiant Flux \(W\):</h3>
+    <p>
+      The Radiant Flux \(\Phi_e\) is equal to the energy of the photon \(E\) times the photon rate \(1\over second\)
+      $$\Phi_e = E \times {photon \over second} $$
+      This equation gives the Radiant Flux in units of \(Joule \over second \) which is equivalent to \(Watt\).
+    </p>
+  </div>
+  <br><br>
+  <div>
+    <a style="margin-right:2em">
+      Wavelength
+    </a>
+    <div class="input-container">
+      <input id="wavelength" type="number" onchange="SetParameter('wavelength')">
+      <select name="wavelengthMultiplier" id="wavelengthMultiplier" onchange="SetParameter('wavelengthMultiplier')" style="width:50px">
+        <option value="1e-9" selected="selected">nm</option>
+        <option value="1e-6">um</option>
+        <option value="1">m</option>
+      </select>
+    </div>
+    <br>
+
+    <a style="margin-right:2em">
+      Photon Energy
+    </a>
+    <div class="input-container">
+      <input id="photonEnergy" type="number" onchange="SetParameter('photonEnergy')">
+    </div>
+    \( J \)
+    <br>
+
+    <a style="margin-right:2em">
+      Photon Rate
+    </a>
+    <div class="input-container">
+      <input id="photonRate" type="number" onchange="SetParameter('photonRate')">
+    </div>
+    \(1 \over s \)
+    <br>
+    <a style="margin-right:2em">
+      Radiant Flux
+    </a>
+    <div class="input-container">
+      <input id="power" type="number" onchange="SetParameter('power')">
+      <select name="wattMultiplier" id="wattMultiplier" onchange="SetParameter('wattMultiplier')" style="width:50px">
+        <option value="1E-24">yW</option>
+        <option value="1E-21">zW</option>
+        <option value="1E-18">aW</option>
+        <option value="1E-15">fW</option>
+        <option value="1E-12">pW</option>
+        <option value="1E-9">nW</option>
+        <option value="1E-6">uW</option>
+        <option value="1E-3">mW</option>
+        <option value="1" selected="selected">W</option>
+        <option value="1E+3">kW</option>
+        <option value="1E+6">MW</option>
+        <option value="1E+9">GW</option>
+      </select>
+    </div>
+  </div>      
+  </section>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+</div>
+
+                    <!-- <table  align="center" align="center" width="600" height="30" cellspacing="0" cellpadding="0" border="0">
                         <tbody>
                            <tr>
                               <td width="100%" height="20&quot;" align="left" valign="top" bgcolor="#FFFFFF">
@@ -891,7 +1270,7 @@ function googleTranslateElementInit() {
                                     u=document.calculator.puoa.options[document.calculator.puoa.selectedIndex].value;ua=u.split(":",3);m=parseFloat(ua[0]);b=parseFloat(ua[1]);a=parseFloat(ua[2]);if(m == 0 && a == 0 && b == 0) { return false; };oa=oa/m;
                                     if(oa.toPrecision) { oa=oa.toPrecision(6); } document.calculator.oa.value = oa;
                                      return false;
-                                    }</script>-->
+                                    }</script>
       <center><form onsubmit="return calculate()" name="calculator" action="">
       <table class="calc" align="center"  border="0" cellspacing="1" cellpadding="0" width="300"><tbody><tr><td><small><i>Power</i></small></td><td><input type="text" name="ia" value="0" size="10" class="infield" onblur="calculate();"></td><td><select name="uia" onchange="calculate();" class="infield"><option value="1:1:0" selected="selected">W (kg⋅m²/s²)</option>
       <option value="0:1:0">- SI UNITS -</option>
@@ -960,7 +1339,7 @@ function googleTranslateElementInit() {
       <p align="center">&nbsp;</p>
       </td>
       </tr>
-      </tbody></table>
+      </tbody></table>-->
       <table align="center" width="600" cellspacing="0" cellpadding="10" border="0">
       <tbody><tr>
       <td width="600" colspan="6">
@@ -1310,9 +1689,7 @@ function googleTranslateElementInit() {
 	  <p></p><p></p>
 	  <p align="center"><img src="./files/hnotes.png" width="662" height="491" alt="Note Frequency Period"></p>
       <td width="20%" align="left" bgcolor="#FFFFFF">
-	        <p></p><p></p>
-      <p align="center"><a href="https://barionleg.github.io/chords_synesthesia/" ><img src="./files/colorScales.gif" width="601" height="348" alt="color scales notes by Isaak Newton 1704 & link georgia's ©olorSynthesiÅ 2022"></a></p>
-	       <p></p><p></p>
+
       <table width="100" bgcolor="#FFFFFF" border="0" cellspacing="0" cellpadding="0">
       <tbody><tr>
 	  <p></p>
