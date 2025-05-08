@@ -1,11 +1,5 @@
-# ci_temp A₽p html [hимик тАбЛи©А℞ мен'Де Лёв]
+# bit byte gegabyte & other calculators
 
-Temperature Simulation
-----------------------
-[inde_ხ](https://barionleg.github.io/ci_temp/index.html) by [©urva$TEC](https://github.com/barionleg/CurvasTES/blob/master/index.html)
+https://barionleg.github.io/eocaltavista/index.html
 
-A small visualization of particles and their reactions to different temperatures created in HTML5 and JavaScript.
-
-A [Pen](https://codepen.io/barionleg/pen/ExrBmBg) by [Bankn8II©$A](https://codepen.io/barionleg) on [CodePen](https://codepen.io).
-
-[License](https://codepen.io/license/pen/ExrBmBg).
+![image](https://github.com/user-attachments/assets/8eb05dca-ca91-41fa-9456-1d04d8de8476)
